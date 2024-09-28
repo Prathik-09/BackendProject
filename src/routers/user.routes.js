@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { loginUser, registerUser,logoutUser} from "../controllers/User.controller.js";
+import { loginUser, registerUser,logoutUser, refreshAccessToken} from "../controllers/User.controller.js";
 import {upload} from "../middlewares/Multer.js";
 import { verifyJwt } from "../middlewares/auth.middileware.js";
-const router = Router();
+const router = Router();;
 
 // Define the route for registration
 router.route("/register").post(upload.fields([
@@ -14,7 +14,7 @@ router.route("/register").post(upload.fields([
         maxcount:1
     }
 ]),registerUser);
-router.route("./login").post(loginUser)
-router.route("./logout").post(verifyJwt,logoutUser )
-
+router.post("/login",loginUser)
+router.post("/logout", verifyJwt, logoutUser);
+router.post("/refreshtoken",refreshAccessToken)
 export default router;
